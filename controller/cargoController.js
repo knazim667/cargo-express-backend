@@ -1,7 +1,7 @@
 const users = require("../model/Users");
 const validate = require("../utilities/validator");
 
-exports.registerUser = async (req, res) => {
+exports.registerUser = async (req, res, next) => {
   try {
     if (
       validate.validatePhone(req.body.phoneNumber) &&
@@ -22,22 +22,25 @@ exports.registerUser = async (req, res) => {
         },
       });
     } else if (!validate.validatePhone(req.body.phoneNumber)) {
-      res.status(400).json({
-        status: "error",
-        message: "Enter valid Phone Number",
-      });
+      let err = new Error();
+      err.status = 400;
+      err.message = "Enter a Valid Phone Number";
+      next(err);
     } else if (!validate.validateEmail(req.body.emailId)) {
-      res.status(400).json({
-        status: "error",
-        message: "Enter valid Email id",
-      });
+      let err = new Error();
+      err.status = 400;
+      err.message = "Enter valid email Id";
+      next(err);
     } else if (!validate.validateAllField(req.body)) {
-      res.status(404).json({
-        status: "fail",
-        message: "All fields are required and unique",
-      });
+      let err = new Error();
+      err.status = 400;
+      err.message = "All field are required and Unique";
+      next(err);
     }
   } catch (error) {
-    console.log(error);
+    let err = new Error();
+    err.status = 404;
+    err.message = "Some thing went wrong";
+    next(err);
   }
 };

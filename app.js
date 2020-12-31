@@ -4,12 +4,14 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
 const routes = require("./routes/routing");
+const errorLogger = require("./middleware/errorLogger");
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use("/", routes);
+app.use(errorLogger);
 
 const port = process.env.PORT || 4000;
 
