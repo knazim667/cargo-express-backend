@@ -8,7 +8,6 @@ const Schema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
   },
   emailId: {
     type: String,
@@ -18,6 +17,7 @@ const Schema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  bookingId: [],
 });
 
 const users = mongoose.model("users", Schema);

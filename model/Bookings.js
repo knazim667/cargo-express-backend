@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 
 const Schema = new mongoose.Schema({
+  bookingId: {
+    type: String,
+    unique: true,
+    required: true,
+  },
   senderName: {
     type: String,
     required: true,
